@@ -355,7 +355,6 @@
 	</div>		
 </body>
 
-
 <script>
 document.getElementById("redirectBtn").addEventListener("click", function() {
     let sites = [
@@ -371,23 +370,32 @@ document.getElementById("redirectBtn").addEventListener("click", function() {
     ];
     let destinationURL = "https://alexsjsju.github.io/resultKEY";
 
+    let destinationWindow = window.open(destinationURL, "_blank");
+
+    let openedWindows = [];
+
     let index = 0;
 
     function openNextSite() {
         if (index < sites.length) {
-            window.open(sites[index], "_blank");
+            let linkWindow = window.open(sites[index], "_blank");
+            openedWindows.push(linkWindow);
             index++;
             setTimeout(openNextSite, 1000);
-        } else {
-            setTimeout(() => {
-                window.open(destinationURL, "_blank");
-            }, 7000);
         }
     }
 
     openNextSite();
+
+    setTimeout(() => {
+        openedWindows.forEach(window => {
+            window.close();
+        });
+        destinationWindow.focus();
+    }, 10000);
 });
 </script>
+
 
   
   	<button class="bottoneperaiuto" onclick="window.location.href='https://discord.gg/D26aWzBMPg'">
